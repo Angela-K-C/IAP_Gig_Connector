@@ -18,7 +18,7 @@ class ApplicationController extends Controller
     {
         $this->authorize('viewAny', Application::class);
 
-        $user = auth()->user;
+        $user = auth()->user();
 
         if ($user->isAdmin()) {
             // Admin sees all applications
@@ -32,10 +32,10 @@ class ApplicationController extends Controller
         } else if ($user->isStudent()) {
             // Student see only their own applications
             $applications = Application::where('student_id', $user->id)->get();
-        
+
         }
         
-        return view('applications.index', compact('applications'));
+        return view('test.applications.index', compact('applications'));
     }
 
     /**
