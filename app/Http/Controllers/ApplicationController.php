@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationStatus;
 use App\Models\Application;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
@@ -16,7 +18,7 @@ class ApplicationController extends Controller
     {
         $this->authorize('viewAny', Application::class);
 
-        $user = auth()->user();
+        $user = auth()->user;
 
         if ($user->isAdmin()) {
             // Admin sees all applications
@@ -67,7 +69,7 @@ class ApplicationController extends Controller
         // Create application
         Application::create([
             'job_id' => $request->job_id,
-            'student_id' => auth()->id(),
+            'student_id' => auth()->id,
             'status' => $request->status,
             'applied_at' => now()
         ]);
@@ -109,6 +111,11 @@ class ApplicationController extends Controller
         // Update status
         $application->status = $request->status;
         $application->save();
+
+        // Send email informing user that his/her application has been approved
+        Mail::to(
+            $application->student->user->email
+        )->send(new ApplicationStatus());
 
         return redirect()->route('applications.index')->with('success', 'Application status successfully updated!');
     }

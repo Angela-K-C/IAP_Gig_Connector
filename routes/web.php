@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\ApplicationStatus;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,5 +39,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // ============== APPLICATION ROUTES =================
 Route::resource('applications', ApplicationController::class);
+
+
+// Test function to send mails
+Route::get('/send-mail', function() {
+    Mail::to("YOUR_EMAIL_HERE")->send(new ApplicationStatus());
+
+    return "Email sent successfully";
+});
+
+// Preview mails
+Route::get('/mailable', function() {
+    return new ApplicationStatus();
+});
 
 require __DIR__.'/auth.php';
