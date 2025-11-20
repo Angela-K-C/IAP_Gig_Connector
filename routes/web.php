@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Mail\ApplicationStatus;
+use App\Models\Gig;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -53,4 +54,15 @@ Route::get('/mailable', function() {
     return new ApplicationStatus();
 });
 
+// ============== GIG ROUTES =======================
+// Route::resource('gigs', GigController::class);
+
+// Test routes
+Route::get('/gigs', function() {
+    $gigs = Gig::all();
+
+    return view('test.gigs.index', compact('gigs'));
+});
+
 require __DIR__.'/auth.php';
+

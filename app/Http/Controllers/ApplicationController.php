@@ -51,10 +51,15 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Redirect if user is not logged in
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
         // Validate application creation request
         $request->validate([
-            'job_id' => 'required|integer',
-            'status' => 'required|string'
+            'job_id' => 'required|integer'
         ]);
 
         // Prevent duplicate applications
@@ -69,8 +74,7 @@ class ApplicationController extends Controller
         // Create application
         Application::create([
             'job_id' => $request->job_id,
-            'student_id' => auth()->id,
-            'status' => $request->status,
+            'student_id' => auth()->id(),
             'applied_at' => now()
         ]);
 
