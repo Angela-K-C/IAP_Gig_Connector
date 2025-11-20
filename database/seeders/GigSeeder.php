@@ -16,7 +16,7 @@ class GigSeeder extends Seeder
     {
         // 3 random gigs (for now)
         Gig::create([
-            'provider_id' => 1,
+            'provider_id' => 3,
             'title' => 'Website Development',
             'description' => 'Build a responsive website for small businesses.',
             'required_skills' => 'HTML,CSS,JavaScript,Laravel',
@@ -28,7 +28,7 @@ class GigSeeder extends Seeder
         ]);
 
         Gig::create([
-            'provider_id' => 2,
+            'provider_id' => 3,
             'title' => 'Social Media Marketing',
             'description' => 'Manage social media campaigns for brand awareness.',
             'required_skills' => 'Facebook Ads,Instagram Marketing,Content Creation',
@@ -40,7 +40,7 @@ class GigSeeder extends Seeder
         ]);
 
         Gig::create([
-            'provider_id' => 1,
+            'provider_id' => 3,
             'title' => 'SEO Optimization',
             'description' => 'Improve website ranking in search engines.',
             'required_skills' => 'SEO,Google Analytics,Content Writing',

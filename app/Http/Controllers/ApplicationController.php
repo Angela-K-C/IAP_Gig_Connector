@@ -25,9 +25,9 @@ class ApplicationController extends Controller
             $applications = Application::all();
 
         } else if ($user->isProvider()) {
-            // Providers see applications for their jobs only
-            // To be updated after seeing gig 
-            $applications = collect(); // empty collection (for now)
+            $applications = Application::whereHas('gig', function ($query) use ($user) {
+                $query->where('provider_id', $user->id);
+            })->get();
 
         } else if ($user->isStudent()) {
             // Student see only their own applications
