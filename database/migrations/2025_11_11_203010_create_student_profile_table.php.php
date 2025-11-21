@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_profiles', function(Blueprint $table) {
-         $table->foreignId('user_id')->constrained('users')->primary();
-
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->primary();
             $table->string('university', 100);
             $table->string('year_of_study', 20);
             $table->string('field_of_study', 100);

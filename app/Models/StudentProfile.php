@@ -41,4 +41,12 @@ class StudentProfile extends Model
         // applications.student_id refers to student_profiles.user_id
         return $this->hasMany(Application::class, 'student_id', 'user_id');
     }
+
+    /*
+        Experiences for this specific StudentProfile
+    */
+    public function experiences()
+    {
+        return $this->hasMany(UserExperience::class);
+    }
 }

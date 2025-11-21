@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
+            {{ __('Personal Information') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Update your personal information and email address.") }}
         </p>
     </header>
 
@@ -22,11 +22,11 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="$user->email" disabled />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -62,3 +62,24 @@
         </div>
     </form>
 </section>
+
+{{-- Geoapify Autocomplete  --}}
+<script src="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.0.0/dist/index.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.0.0/dist/styles.min.css">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const autocomplete = new GeocoderAutocomplete(
+            document.getElementById("location"),
+            "981e3034348a4e21950903efad4ba2dd",
+            {
+                type: "city",     // or: "street", "country", "postcode"
+                limit: 5
+            }
+        );
+
+        autocomplete.on("select", (value) => {
+            console.log("Selected place:", value);
+        });
+    });
+</script>
