@@ -51,8 +51,20 @@ class ProfileController extends Controller
                 'availability',
                 'skills',
                 'interests',
-                'experiences'
+                'experiences',
+                'cv_path'
             ]);
+
+            if ($request->hasFile('cv_path')) {
+                $file = $request->file('cv_path');
+
+                // Save file in storage/app/public/cvs
+                $path = $file->store('cvs', 'public'); // returns e.g. "cvs/my_cv.pdf"
+
+                // Store the correct path in student profile
+                $studentData['cv_path'] = $path;
+            }
+
             if (!empty($studentData)) {
                 $user->studentProfile()->update($studentData);
             }

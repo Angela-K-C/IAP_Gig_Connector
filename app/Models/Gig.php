@@ -40,4 +40,10 @@ class Gig extends Model
     {
         return $this->hasMany(Application::class, 'job_id');
     }
+
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'saved_gigs')->withTimestamps();
+    }
+
 }

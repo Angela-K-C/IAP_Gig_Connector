@@ -81,6 +81,13 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    // Saved gigs
+    public function savedGigs()
+    {
+        return $this->belongsToMany(Gig::class, 'saved_gigs')->withTimestamps();
+    }
+
+
     // AUTH ROLE LOGICS --- learnt on 12/11/November/2025
     public function isStudent(): bool {
         return $this->role === 'student';

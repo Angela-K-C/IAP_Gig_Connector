@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SavedGigsController;
 use App\Mail\ApplicationStatus;
 use App\Models\Gig;
 use Illuminate\Support\Facades\Mail;
@@ -57,12 +58,31 @@ Route::get('/mailable', function() {
 // ============== GIG ROUTES =======================
 // Route::resource('gigs', GigController::class);
 
+
 // Test routes
 Route::get('/gigs', function() {
     $gigs = Gig::all();
 
     return view('test.gigs.index', compact('gigs'));
 });
+
+Route::get('/saved-gigs', [SavedGigsController::class, 'savedList'])->name('gigs.saved');
+
+Route::post('/gigs/{gig}/save', [SavedGigsController::class, 'save'])->name('gigs.save');
+Route::delete('/gigs/{gig}/save', [SavedGigsController::class, 'remove'])->name('gigs.unsave');
+
+Route::get('/gigs/{gig}/applicants', function (Gig $gig) {
+    // Make sure provider owns this gig
+    if (auth()->id() !== $gig->provider_id) {
+        abort(403, 'Unauthorized');
+    }
+
+    // Get all applications (no eager loading)
+    $applications = $gig->applications;
+
+    return view('test.gigs.applicants', compact('gig', 'applications'));
+})->name('gigs.applicants');
+
 
 require __DIR__.'/auth.php';
 

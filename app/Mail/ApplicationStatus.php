@@ -13,14 +13,14 @@ class ApplicationStatus extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $username;
+    public $status;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($status)
     {
-        $this->username = "John Doe";
+        $this->status = $status;
     }
 
     /**
@@ -29,7 +29,7 @@ class ApplicationStatus extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Application Approved!',
+            subject: 'Application Status!',
         );
     }
 

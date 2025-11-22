@@ -20,14 +20,15 @@ class ApplicationController extends Controller
 
         $user = auth()->user();
 
+        $applications = null;
+        $gigs = null;
+
         if ($user->isAdmin()) {
             // Admin sees all applications
             $applications = Application::all();
 
         } else if ($user->isProvider()) {
-            $applications = Application::whereHas('gig', function ($query) use ($user) {
-                $query->where('provider_id', $user->id);
-            })->get();
+            $gigs = $user->provider->gigs()->withCount('applications')->get();
 
         } else if ($user->isStudent()) {
             // Student see only their own applications
@@ -35,7 +36,7 @@ class ApplicationController extends Controller
 
         }
         
-        return view('test.applications.index', compact('applications'));
+        return view('test.applications.index', compact('applications', 'gigs'));
     }
 
     /**
@@ -105,21 +106,23 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, Application $application)
     {
-        $this->authorize('update', Application::class);
+        $this->authorize('update', $application); 
 
         // Validate status
         $request->validate([
-            'status' => 'required|string|in:pending,approved,shortlisted,rejected'
+            'status' => 'required|string|in:approved,shortlisted,rejected'
         ]);
 
         // Update status
-        $application->status = $request->status;
+        $application->update([
+            'status' => $request->get('status'),
+        ]);
         $application->save();
 
         // Send email informing user that his/her application has been approved
         Mail::to(
-            $application->student->user->email
-        )->send(new ApplicationStatus());
+            $application->student->user->email,
+        )->send(new ApplicationStatus($request->get('status')));
 
         return redirect()->route('applications.index')->with('success', 'Application status successfully updated!');
     }

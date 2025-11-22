@@ -17,7 +17,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -222,6 +222,45 @@
                         </div>
                     </div>
 
+                    <!-- CV -->
+                    <div class="mt-4">
+                        <x-input-label for="cv_path" :value="__('Upload CV')" />
+                        <input type="file" name="cv_path" id="cv_path" class="mt-1 block w-full border rounded" />
+                        <x-input-error :messages="$errors->get('cv_path')" class="mt-2" />
+
+                        @if ($user->studentProfile->cv_path)
+                            <p class="mt-2">
+                                Current CV: 
+                                <a href="{{ asset('storage/' . $user->studentProfile->cv_path) }}" target="_blank" class="underline text-blue-600">Download</a>
+                            </p>
+                        @endif
+                    </div>
+
+                    <div class="mt-4">
+                        @if($user->studentProfile->cv_path)
+                            <a href="{{ asset('storage/' . $user->studentProfile->cv_path) }}" 
+                            class="px-4 py-2 bg-gray-600 text-white rounded" 
+                            download>
+                            Download CV
+                            </a>
+
+                            <button id="previewBtn" type="button" class="px-4 py-2 bg-blue-600 text-white rounded ml-2">
+                                Preview CV
+                            </button>
+
+                            <!-- Preview iframe (hidden by default) -->
+                            <div id="cvPreviewContainer" style="display:none; margin-top:16px;">
+                                <iframe 
+                                    src="{{ asset('storage/' . $user->studentProfile->cv_path) }}" 
+                                    width="100%" 
+                                    height="600px"
+                                ></iframe>
+                            </div>
+                        @else
+                            <p class="text-gray-500">No CV uploaded.</p>
+                        @endif
+                    </div>
+
                 </div>
             </div>
         @endif
@@ -242,3 +281,21 @@
         </div>
     </form>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const previewBtn = document.getElementById('previewBtn');
+        const previewContainer = document.getElementById('cvPreviewContainer');
+        const previewIframe = document.getElementById('cvPreviewIframe');
+
+        previewBtn.addEventListener('click', function () {
+            // Toggle visibility
+            if (previewContainer.style.display === 'none') {
+                previewContainer.style.display = 'block';
+            } else {
+                previewContainer.style.display = 'none';
+                previewIframe.src = ''; // reset iframe to stop loading
+            }
+        });
+    });
+</script>

@@ -41,7 +41,9 @@ class ApplicationPolicy
         if ($user->isAdmin()) return true;
 
         // Provider - can update status for their jobs
-        if ($user->isProvider()) return true; // placeholder
+        if ($user->isProvider()) {
+            return $application->gig->provider_id === $user->id;
+        };
 
         return false;
     }

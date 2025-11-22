@@ -118,7 +118,7 @@
             <!-- Bio -->
             <div class="border-b border-gray-200 pb-6">
                 <header class="mb-4">
-                    <h2 class="text-lg font-medium text-gray-900">About You</h2>
+                    <h2 class="text-lg font-medium text-gray-900">About Us</h2>
                 </header>
 
                 <div class="space-y-2">
@@ -132,6 +132,20 @@
 
                     <x-input-error class="mt-2" :messages="$errors->get('bio')" />
                 </div>
+            </div>
+
+            <!-- CV -->
+            <div class="mt-4">
+                <x-input-label for="cv" :value="__('Upload CV')" />
+                <input type="file" name="cv" id="cv" class="mt-1 block w-full border rounded" />
+                <x-input-error :messages="$errors->get('cv')" class="mt-2" />
+
+                @if ($user->studentProfile->cv)
+                    <p class="mt-2">
+                        Current CV: 
+                        <a href="{{ asset('storage/' . $user->studentProfile->cv) }}" target="_blank" class="underline text-blue-600">Download</a>
+                    </p>
+                @endif
             </div>
 
             <div class="flex items-center justify-left gap-4">
