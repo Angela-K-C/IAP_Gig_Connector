@@ -58,6 +58,18 @@ class ProfileController extends Controller
             }
         }
 
+        if ($user->isProvider()) {
+            $providerData = $request->only([
+                'organization_name',
+                'contact_number',
+                'about_provider'
+            ]);
+
+            if (!empty($providerData)) {
+                $user->provider()->update($providerData);
+            }
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

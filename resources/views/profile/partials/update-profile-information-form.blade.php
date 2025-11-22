@@ -53,146 +53,179 @@
             @endif
         </div>
 
-        <!-- Other profile information -->
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-            <div class="max-w space-y-10">
-
-                <!-- Basic Information -->
-                <div class="border-b border-gray-200 pb-6">
-                    <header class="mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Basic Information</h2>
-                    </header>
-
-                    <!-- University -->
-                    <x-input-label for="university" :value="__('University')" />
-                    <x-text-input 
-                        id="university" 
-                        name="university" 
-                        type="text" 
-                        class="mt-1 block w-full"
-                        :value="old('university', $user->studentProfile->university)"
-                        autofocus 
-                    />
-                    <x-input-error class="mt-2" :messages="$errors->get('university')" />
-
-                    <!-- Year of Study -->
-                    <x-input-label for="year_of_study" :value="__('Year of Study')" />
-                    <x-text-input 
-                        id="year_of_study"
-                        name="year_of_study"
-                        type="number"
-                        min="0"
-                        class="mt-1 block w-full" 
-                        :value="old('year_of_study', $user->studentProfile->year_of_study)"
-                    />
-                    <x-input-error class="mt-2" :messages="$errors->get('year_of_study')" />
-
-                    <!-- Field of Study -->
-                    <x-input-label for="field_of_study" :value="__('Field of Study')" />
-                    <x-text-input 
-                        id="field_of_study" 
-                        name="field_of_study" 
-                        type="text" 
-                        class="mt-1 block w-full"
-                        :value="old('field_of_study', $user->studentProfile->field_of_study)"
-                    />
-                    <x-input-error class="mt-2" :messages="$errors->get('field_of_study')" />
-
-                    <!-- Phone Number -->
-                    <x-input-label for="phone_number" :value="__('Phone Number')" />
-                    <x-text-input 
-                        id="phone_number" 
-                        name="phone_number" 
-                        type="tel" 
-                        class="mt-1 block w-full"
-                        :value="old('phone_number', $user->studentProfile->phone_number)"
-                    />
-                    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
-
-                    <!-- Location -->
-                    <x-input-label for="location" :value="__('Location')" />
-                    <x-text-input 
-                        id="location" 
-                        name="location"
-                        type="text" 
-                        class="mt-1 block w-full"
-                        placeholder="Search for a location..." 
-                        :value="old('location', $user->studentProfile->location)"
-                    />
-                    <x-input-error class="mt-2" :messages="$errors->get('location')" />
-                </div>
-
-                <!-- Skills -->
-                <div class="border-b border-gray-200 pb-6">
-                    <header class="mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Skills and Interests</h2>
-                    </header>
-
-                    <div class="space-y-4">
-                        <div>
-                            <x-input-label for="skills" :value="__('Skills')" />
-                            <livewire:skills-input :initial-skills="$user->studentProfile->skills ?? []" />
-                        </div>
-
-                        <div>
-                            <x-input-label for="interests" :value="__('Interests')" />
-                            <livewire:interests-input :initial-interests="$user->studentProfile->interests ?? []" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Experiences -->
-                <div class="border-b border-gray-200 pb-6">
-                    <header class="mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Experiences</h2>
-                    </header>
-
-                    <livewire:student-experience-input :initial-experiences="$user->studentProfile->experiences ?? []"  />
-                </div>
-
-                <!-- Availability -->
-                <div class="border-b border-gray-200 pb-6">
-                    <header class="mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Availability</h2>
-                    </header>
-
-                    <div class="space-y-2">
-                        <x-input-label for="availability" :value="__('Availability')" />
-                        <select
-                            id="availability"
-                            name="availability"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        >
-                            <option value="">Select availability</option>
-                            <option value="Remote" {{ old('availability', $user->studentProfile->availability ?? '') == 'remote' ? 'selected' : '' }}>Remote</option>
-                            <option value="On-site" {{ old('availability', $user->studentProfile->availability ?? '') == 'on-site' ? 'selected' : '' }}>On-site</option>
-                            <option value="Hybrid" {{ old('availability', $user->studentProfile->availability ?? '') == 'hybrid' ? 'selected' : '' }}>Hybrid</option>
-                        </select>
-                        <x-input-error class="mt-2" :messages="$errors->get('availability')" />
-                    </div>
-                </div>
-
-                <!-- Bio -->
-                <div class="border-b border-gray-200 pb-6">
-                    <header class="mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">About You</h2>
-                    </header>
-
-                    <div class="space-y-2">
-                        <x-input-label for="bio" :value="__('Bio')" />
-                        <textarea 
-                            id="bio"
-                            name="bio"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                            rows="4"
-                        >{{ old('bio', $user->studentProfile->bio ?? '') }}</textarea>
-
-                        <x-input-error class="mt-2" :messages="$errors->get('bio')" />
-                    </div>
-                </div>
-
+        <!-- Other profile information (for providers) -->
+        @if (auth()->user()->isProvider())
+            <!-- Organization Name -->
+            <div>
+                <x-input-label for="organization_name" :value="__('Organization Name')" />
+                <x-text-input id="organization_name" name="organization_name" type="text" class="mt-1 block w-full" :value="old('organization_name', $user->provider->organization_name)" required autofocus autocomplete="organization_name" />
+                <x-input-error class="mt-2" :messages="$errors->get('organization_name')" />
             </div>
-        </div>
+
+            <!-- Contact Number -->
+            <div>
+                <x-input-label for="contact_number" :value="__('Contact Number')" />
+                <x-text-input id="contact_number" name="contact_number" type="tel" class="mt-1 block w-full" :value="old('contact_number', $user->provider->contact_number)" required autofocus autocomplete="contact_number" />
+                <x-input-error class="mt-2" :messages="$errors->get('contact_number')" />
+            </div>
+
+            <!-- About -->
+            <div>
+                <x-input-label for="about_provider" :value="__('About Us')" />
+                <textarea 
+                    id="about_provider"
+                    name="about_provider"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                    rows="4"
+                >{{ old('about_provider', $user->provider->about_provider) }}</textarea>
+
+                <x-input-error class="mt-2" :messages="$errors->get('about_provider')" />
+            </div>
+        @endif
+
+        <!-- Other profile information (for students) -->
+        @if (auth()->user()->isStudent())
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w space-y-10">
+
+                    <!-- Basic Information -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <header class="mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Basic Information</h2>
+                        </header>
+
+                        <!-- University -->
+                        <x-input-label for="university" :value="__('University')" />
+                        <x-text-input 
+                            id="university" 
+                            name="university" 
+                            type="text" 
+                            class="mt-1 block w-full"
+                            :value="old('university', $user->studentProfile->university)"
+                            autofocus 
+                        />
+                        <x-input-error class="mt-2" :messages="$errors->get('university')" />
+
+                        <!-- Year of Study -->
+                        <x-input-label for="year_of_study" :value="__('Year of Study')" />
+                        <x-text-input 
+                            id="year_of_study"
+                            name="year_of_study"
+                            type="number"
+                            min="0"
+                            class="mt-1 block w-full" 
+                            :value="old('year_of_study', $user->studentProfile->year_of_study)"
+                        />
+                        <x-input-error class="mt-2" :messages="$errors->get('year_of_study')" />
+
+                        <!-- Field of Study -->
+                        <x-input-label for="field_of_study" :value="__('Field of Study')" />
+                        <x-text-input 
+                            id="field_of_study" 
+                            name="field_of_study" 
+                            type="text" 
+                            class="mt-1 block w-full"
+                            :value="old('field_of_study', $user->studentProfile->field_of_study)"
+                        />
+                        <x-input-error class="mt-2" :messages="$errors->get('field_of_study')" />
+
+                        <!-- Phone Number -->
+                        <x-input-label for="phone_number" :value="__('Phone Number')" />
+                        <x-text-input 
+                            id="phone_number" 
+                            name="phone_number" 
+                            type="tel" 
+                            class="mt-1 block w-full"
+                            :value="old('phone_number', $user->studentProfile->phone_number)"
+                        />
+                        <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+
+                        <!-- Location -->
+                        <x-input-label for="location" :value="__('Location')" />
+                        <x-text-input 
+                            id="location" 
+                            name="location"
+                            type="text" 
+                            class="mt-1 block w-full"
+                            placeholder="Search for a location..." 
+                            :value="old('location', $user->studentProfile->location)"
+                        />
+                        <x-input-error class="mt-2" :messages="$errors->get('location')" />
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <header class="mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Skills and Interests</h2>
+                        </header>
+
+                        <div class="space-y-4">
+                            <div>
+                                <x-input-label for="skills" :value="__('Skills')" />
+                                <livewire:skills-input :initial-skills="$user->studentProfile->skills ?? []" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="interests" :value="__('Interests')" />
+                                <livewire:interests-input :initial-interests="$user->studentProfile->interests ?? []" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experiences -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <header class="mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Experiences</h2>
+                        </header>
+
+                        <livewire:student-experience-input :initial-experiences="$user->studentProfile->experiences ?? []"  />
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <header class="mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Availability</h2>
+                        </header>
+
+                        <div class="space-y-2">
+                            <x-input-label for="availability" :value="__('Availability')" />
+                            <select
+                                id="availability"
+                                name="availability"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                            >
+                                <option value="">Select availability</option>
+                                <option value="Remote" {{ old('availability', $user->studentProfile->availability ?? '') == 'remote' ? 'selected' : '' }}>Remote</option>
+                                <option value="On-site" {{ old('availability', $user->studentProfile->availability ?? '') == 'on-site' ? 'selected' : '' }}>On-site</option>
+                                <option value="Hybrid" {{ old('availability', $user->studentProfile->availability ?? '') == 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('availability')" />
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <header class="mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">About You</h2>
+                        </header>
+
+                        <div class="space-y-2">
+                            <x-input-label for="bio" :value="__('Bio')" />
+                            <textarea 
+                                id="bio"
+                                name="bio"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                rows="4"
+                            >{{ old('bio', $user->studentProfile->bio ?? '') }}</textarea>
+
+                            <x-input-error class="mt-2" :messages="$errors->get('bio')" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        @endif
+
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
