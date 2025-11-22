@@ -1,11 +1,11 @@
 <div class="space-y-4">
     <!-- Input fields for a new job -->
     <div wire:key="experience-form" class="grid grid-cols-1 md:grid-cols-2 gap-2">
-        <input type="text" wire:model="title" placeholder="Job Title" class="border rounded p-2 w-full" />
-        <input type="text" wire:model="company" placeholder="Company" class="border rounded p-2 w-full" />
-        <input type="date" wire:model="start_date" class="border rounded p-2 w-full" />
-        <input type="date" wire:model="end_date" class="border rounded p-2 w-full" />
-        <textarea wire:model="description" placeholder="Description" class="border rounded p-2 w-full"></textarea>
+        <input type="text" wire:model.defer="title" placeholder="Job Title" class="border rounded p-2 w-full" />
+        <input type="text" wire:model.defer="company" placeholder="Company" class="border rounded p-2 w-full" />
+        <input type="date" wire:model.defer="start_date" class="border rounded p-2 w-full" />
+        <input type="date" wire:model.defer="end_date" class="border rounded p-2 w-full" />
+        <textarea wire:model.defer="description" placeholder="Description" class="border rounded p-2 w-full"></textarea>
     </div>
 
     <button wire:click="addExperience" type="button" class="px-4 py-2 bg-blue-600 text-white rounded">
@@ -24,6 +24,8 @@
                 
                 <button wire:click="removeExperience({{ $index }})" class="text-red-600">Remove</button>
 
+                <!-- Hidden input so skills submit with the form -->
+                <input type="hidden" name="experiences[]" value="{{ json_encode($exp) }}">
             </div>
         @endforeach
     </div>

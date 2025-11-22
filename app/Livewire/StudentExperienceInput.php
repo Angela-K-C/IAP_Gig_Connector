@@ -7,9 +7,7 @@ use Livewire\Component;
 
 class StudentExperienceInput extends Component
 {
-    public StudentProfile $studentProfile;
-
-    public $experiences = []; // temporary list for UI
+    public $experiences = [];
 
     // Inputs for new experience
     public $title = '';
@@ -18,21 +16,15 @@ class StudentExperienceInput extends Component
     public $end_date = '';
     public $description = '';
 
-    public function mount(StudentProfile $studentProfile)
+    public function mount($initialExperiences = [])
     {
-        $this->studentProfile = $studentProfile;
+        $decoded = [];
 
-        // Load existing experiences for edit
-        // $this->experiences = $studentProfile->experiences->map(function($exp) {
-        //     return [
-        //         'id' => $exp->id,
-        //         'title' => $exp->title,
-        //         'company' => $exp->company,
-        //         'start_date' => $exp->start_date,
-        //         'end_date' => $exp->end_date,
-        //         'description' => $exp->description,
-        //     ];
-        // })->toArray();
+        foreach ($initialExperiences as $exp) {
+            $decoded[] = is_string($exp) ? json_decode($exp, true) : $exp;
+        }
+
+        $this->experiences = $decoded;
     }
 
     // Add experience to temporary array
@@ -52,18 +44,8 @@ class StudentExperienceInput extends Component
             'description' => $this->description,
         ];
 
-        // Reindex array to ensure Livewire detects the change
-        // $this->experiences = array_values($this->experiences);
-
         // Reset input fields
-        $this->title = '';
-        $this->company = '';
-        $this->start_date = '';
-        $this->end_date = '';
-        $this->description = '';
-
-        // Force Livewire to re-render the inputs
-        $this->dispatchBrowserEvent('experienceReset');
+        $this->reset(['title', 'company', 'start_date', 'end_date', 'description']);
     }
 
     // Remove experience from temporary array
@@ -71,20 +53,6 @@ class StudentExperienceInput extends Component
     {
         unset($this->experiences[$index]);
         $this->experiences = array_values($this->experiences);
-    }
-
-    // Save all experiences to DB
-    public function saveExperiences()
-    {
-        // Remove existing experiences
-        $this->studentProfile->experiences()->delete();
-
-        // Save all from temporary array
-        foreach ($this->experiences as $exp) {
-            $this->studentProfile->experiences()->create($exp);
-        }
-
-        session()->flash('success', 'Experiences saved successfully!');
     }
 
     public function render()

@@ -27,6 +27,9 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+
+        // dd($request->get('experiences'));
+
         $user = $request->user();
 
         $user->fill($request->validated());
@@ -38,7 +41,18 @@ class ProfileController extends Controller
         $user->save();
 
         if ($user->isStudent()) {
-            $studentData = $request->only(['university', 'year_of_study', 'field_of_study', 'bio']);
+            $studentData = $request->only([
+                'university', 
+                'year_of_study', 
+                'field_of_study', 
+                'bio',
+                'phone_number',
+                'location',
+                'availability',
+                'skills',
+                'interests',
+                'experiences'
+            ]);
             if (!empty($studentData)) {
                 $user->studentProfile()->update($studentData);
             }

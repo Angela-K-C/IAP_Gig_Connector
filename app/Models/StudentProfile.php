@@ -19,10 +19,25 @@ class StudentProfile extends Model
     public $timestamps = false; 
 
     protected $fillable = [
-        'user_id', 'university', 'year_of_study', 'field_of_study', 
-        'skills', 'interests', 'experience', 'availability_remote', 
-        'availability_physical', 'preferred_hours', 'bio', 'cv_path', 
-        'profile_completion'
+        'user_id',
+        'university',
+        'year_of_study',
+        'field_of_study',
+        'interests',
+        'availability',
+        'bio',
+        'cv_path',
+        'phone_number',
+        'location',
+        'skills',
+        'experiences'
+    ];
+
+    // Cast JSON field to array automatically
+    protected $casts = [
+        'skills' => 'array',
+        'interests' => 'array',
+        'experiences' => 'array'
     ];
 
     /**

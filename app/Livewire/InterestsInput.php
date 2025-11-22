@@ -6,8 +6,14 @@ use Livewire\Component;
 
 class InterestsInput extends Component
 {
+
     public $interests = [];
     public $interest = "";
+
+    public function mount($initialInterests = [])
+    {
+        $this->interests = is_array($initialInterests) ? $initialInterests : json_decode($initialInterests, true);
+    }
 
     public function addInterest()
     {
@@ -16,7 +22,8 @@ class InterestsInput extends Component
         }
 
         $this->interests[] = $this->interest;
-        $this->interest = '';
+        // Reset input
+        $this->reset('interest');
     }
 
     public function removeInterest($index)

@@ -10,6 +10,11 @@ class SkillsInput extends Component
     public $skills = [];
     public $skill = "";
 
+    public function mount($initialSkills = [])
+    {
+        $this->skills = is_array($initialSkills) ? $initialSkills : json_decode($initialSkills, true);
+    }
+
     public function addSkill()
     {
         if (trim($this->skill) === '') {
@@ -17,7 +22,8 @@ class SkillsInput extends Component
         }
 
         $this->skills[] = $this->skill;
-        $this->skill = '';
+        // Reset input
+        $this->reset('skill');
     }
 
     public function removeSkill($index)

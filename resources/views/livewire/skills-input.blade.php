@@ -2,8 +2,8 @@
 
      <!-- Skills list -->
     <div class="space-y-1">
-        @foreach($skills as $index => $s)
-            <div class="flex justify-between items-center border p-2 rounded">
+        @foreach($skills ?? [] as $index => $s)
+            <div wire:key="skill-item-{{ $index }}" class="flex justify-between items-center border p-2 rounded">
                 <span>{{ $s }}</span>
 
                 <button 
@@ -24,10 +24,11 @@
     <div class="flex gap-2">
         <input 
             type="text"
-            wire:model="skill"
+            wire:model.defer="skill"
             class="border rounded p-2 w-full"
             placeholder="Enter a skill"
-        >
+            autocomplete="off"
+        />
 
         <button 
             wire:click="addSkill"

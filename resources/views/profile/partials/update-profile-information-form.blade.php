@@ -1,11 +1,15 @@
+@if (session('status'))
+    <p class="text-red-600">{{ session('status') }}</p>
+@endif
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Personal Information') }}
+            {{ __('Profile Information') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your personal information and email address.") }}
+            {{ __("Update your account's profile information.") }}
         </p>
     </header>
 
@@ -17,16 +21,18 @@
         @csrf
         @method('patch')
 
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
-        
 
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="$user->email" disabled />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -47,6 +53,147 @@
             @endif
         </div>
 
+        <!-- Other profile information -->
+        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class="max-w space-y-10">
+
+                <!-- Basic Information -->
+                <div class="border-b border-gray-200 pb-6">
+                    <header class="mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Basic Information</h2>
+                    </header>
+
+                    <!-- University -->
+                    <x-input-label for="university" :value="__('University')" />
+                    <x-text-input 
+                        id="university" 
+                        name="university" 
+                        type="text" 
+                        class="mt-1 block w-full"
+                        :value="old('university', $user->studentProfile->university)"
+                        autofocus 
+                    />
+                    <x-input-error class="mt-2" :messages="$errors->get('university')" />
+
+                    <!-- Year of Study -->
+                    <x-input-label for="year_of_study" :value="__('Year of Study')" />
+                    <x-text-input 
+                        id="year_of_study"
+                        name="year_of_study"
+                        type="number"
+                        min="0"
+                        class="mt-1 block w-full" 
+                        :value="old('year_of_study', $user->studentProfile->year_of_study)"
+                    />
+                    <x-input-error class="mt-2" :messages="$errors->get('year_of_study')" />
+
+                    <!-- Field of Study -->
+                    <x-input-label for="field_of_study" :value="__('Field of Study')" />
+                    <x-text-input 
+                        id="field_of_study" 
+                        name="field_of_study" 
+                        type="text" 
+                        class="mt-1 block w-full"
+                        :value="old('field_of_study', $user->studentProfile->field_of_study)"
+                    />
+                    <x-input-error class="mt-2" :messages="$errors->get('field_of_study')" />
+
+                    <!-- Phone Number -->
+                    <x-input-label for="phone_number" :value="__('Phone Number')" />
+                    <x-text-input 
+                        id="phone_number" 
+                        name="phone_number" 
+                        type="tel" 
+                        class="mt-1 block w-full"
+                        :value="old('phone_number', $user->studentProfile->phone_number)"
+                    />
+                    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+
+                    <!-- Location -->
+                    <x-input-label for="location" :value="__('Location')" />
+                    <x-text-input 
+                        id="location" 
+                        name="location"
+                        type="text" 
+                        class="mt-1 block w-full"
+                        placeholder="Search for a location..." 
+                        :value="old('location', $user->studentProfile->location)"
+                    />
+                    <x-input-error class="mt-2" :messages="$errors->get('location')" />
+                </div>
+
+                <!-- Skills -->
+                <div class="border-b border-gray-200 pb-6">
+                    <header class="mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Skills and Interests</h2>
+                    </header>
+
+                    <div class="space-y-4">
+                        <div>
+                            <x-input-label for="skills" :value="__('Skills')" />
+                            <livewire:skills-input :initial-skills="$user->studentProfile->skills ?? []" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="interests" :value="__('Interests')" />
+                            <livewire:interests-input :initial-interests="$user->studentProfile->interests ?? []" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiences -->
+                <div class="border-b border-gray-200 pb-6">
+                    <header class="mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Experiences</h2>
+                    </header>
+
+                    <livewire:student-experience-input :initial-experiences="$user->studentProfile->experiences ?? []"  />
+                </div>
+
+                <!-- Availability -->
+                <div class="border-b border-gray-200 pb-6">
+                    <header class="mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Availability</h2>
+                    </header>
+
+                    <div class="space-y-2">
+                        <x-input-label for="availability" :value="__('Availability')" />
+                        <select
+                            id="availability"
+                            name="availability"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                        >
+                            <option value="">Select availability</option>
+                            <option value="Remote" {{ old('availability', $user->studentProfile->availability ?? '') == 'remote' ? 'selected' : '' }}>Remote</option>
+                            <option value="On-site" {{ old('availability', $user->studentProfile->availability ?? '') == 'on-site' ? 'selected' : '' }}>On-site</option>
+                            <option value="Hybrid" {{ old('availability', $user->studentProfile->availability ?? '') == 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+                        </select>
+                        <x-input-error class="mt-2" :messages="$errors->get('availability')" />
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="border-b border-gray-200 pb-6">
+                    <header class="mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">About You</h2>
+                    </header>
+
+                    <div class="space-y-2">
+                        <x-input-label for="bio" :value="__('Bio')" />
+                        <textarea 
+                            id="bio"
+                            name="bio"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                            rows="4"
+                        >{{ old('bio', $user->studentProfile->bio ?? '') }}</textarea>
+
+                        <x-input-error class="mt-2" :messages="$errors->get('bio')" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -62,24 +209,3 @@
         </div>
     </form>
 </section>
-
-{{-- Geoapify Autocomplete  --}}
-<script src="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.0.0/dist/index.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.0.0/dist/styles.min.css">
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const autocomplete = new GeocoderAutocomplete(
-            document.getElementById("location"),
-            "981e3034348a4e21950903efad4ba2dd",
-            {
-                type: "city",     // or: "street", "country", "postcode"
-                limit: 5
-            }
-        );
-
-        autocomplete.on("select", (value) => {
-            console.log("Selected place:", value);
-        });
-    });
-</script>

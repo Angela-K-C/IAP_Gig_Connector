@@ -2,20 +2,20 @@
 
      <!-- Interests list -->
     <div class="space-y-1">
-        @foreach($interests as $index => $i)
-            <div class="flex justify-between items-center border p-2 rounded">
+        @foreach($interests ?? [] as $index => $i)
+            <div wire:key="interest-item-{{ $index }}" class="flex justify-between items-center border p-2 rounded">
                 <span>{{ $i }}</span>
 
                 <button 
                     type="button"
-                    wire:click="removeSkill({{ $index }})"
+                    wire:click="removeInterest({{ $index }})"
                     class="text-red-600"
                 >
                     Remove
                 </button>
 
                 <!-- Hidden input so interests submit with the form -->
-                <input type="hidden" name="skills[]" value="{{ $i }}">
+                <input type="hidden" name="interests[]" value="{{ $i }}">
             </div>
         @endforeach
     </div>
@@ -26,7 +26,8 @@
             type="text"
             wire:model="interest"
             class="border rounded p-2 w-full"
-            placeholder="Enter a skill"
+            placeholder="Enter an interest"
+            autocomplete="off"
         >
 
         <button 
