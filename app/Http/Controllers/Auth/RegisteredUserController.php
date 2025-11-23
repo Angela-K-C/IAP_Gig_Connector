@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
-use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -28,37 +28,26 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    // app/Http/Controllers/Auth/RegisteredUserController.php
-
-public function store(Request $request): RedirectResponse
+    public function store(Request $request)
 {
     $request->validate([
-        'name' => ['required', 'string', 'max:255'], 
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'role' => ['required', 'in:student,provider'],
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => ['required', 'confirmed', Password::defaults()],
+        'role' => 'required|in:student,provider',
+        'university' => 'required_if:role,student|string|max:255',
     ]);
 
-    // Update the key from 'full_name' to 'name'
     $user = User::create([
-        'name' => $request->name, // <-- CHANGE THIS LINE to use 'name'
+        'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
         'role' => $request->role,
+        'university' => $request->university ?? null,
     ]);
 
-    // --- Profile Creation Logic (Remains the same) ---
-    if ($user->role === 'student') {
-        $user->student()->create([]);
-    } elseif ($user->role === 'provider') {
-        $user->provider()->create([]);
-    }
-    // --------------------------------------------------------
-
-    event(new Registered($user));
-
+    // Optionally log in user
     Auth::login($user);
 
-    return redirect(RouteServiceProvider::HOME);
-}
-}
+    return redirect()->route('dashboard');
+}}
