@@ -2,31 +2,28 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'password',
+        'role',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -35,8 +32,6 @@ class User extends Authenticatable
 
     /**
      * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
      */
     protected function casts(): array
     {
@@ -44,5 +39,51 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // --- RELATIONSHIPS ---
+
+    /**
+     * Get the Student profile associated with the user.
+     */
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    /**
+     * Get the Provider profile associated with the user.
+     */
+    public function provider(): HasOne
+    {
+        return $this->hasOne(Provider::class);
+    }
+
+    /**
+     * Get the gigs posted by this user (if they are a Provider).
+     */
+    public function gigs(): HasMany
+    {
+        return $this->hasMany(Gig::class);
+    }
+
+    /**
+     * Get the applications submitted by this user (if they are a Student).
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+    
+    // --- HELPER METHODS ---
+    
+    public function isStudent(): bool 
+    {
+        return $this->role === 'student';
+    }
+
+    public function isProvider(): bool 
+    {
+        return $this->role === 'provider';
     }
 }
