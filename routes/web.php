@@ -39,3 +39,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::resource('applications', ApplicationController::class);
 
 require __DIR__.'/auth.php';
+
+// ============== GIG ROUTES =================
+use App\Http\Controllers\GigController; 
+Route::resource('gigs', GigController::class);
