@@ -1,22 +1,6 @@
 <x-guest-layout>
-    <div class="flex flex-col md:flex-row items-center justify-center w-full min-h-screen">
-        
-        {{-- Left Illustration & Branding (Visible on medium screens and up) --}}
-        <div class="hidden md:flex flex-1 items-center justify-center p-8 lg:p-12">
-            <div class="text-center">
-                <img src="{{ asset('images/gig-connector-illustration-small.png') }}" alt="Gig Connector Illustration" class="max-w-xs mx-auto mb-8">
-                
-                <h1 class="text-4xl font-extrabold text-indigo-700 mb-2">Gig Connector</h1>
-                <p class="text-indigo-500 text-lg">Connect, Apply, Grow</p>
-                
-                <a href="{{ route('welcome') }}" class="mt-4 inline-block text-indigo-600 hover:text-indigo-800 underline font-medium text-sm">
-                    Learn More about our platform
-                </a>
-            </div>
-        </div>
-
-        {{-- Right Form Section --}}
-        <div class="flex-1 w-full max-w-md px-6 py-8 bg-white shadow-lg overflow-hidden sm:rounded-lg">
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-md px-6 py-8 bg-white shadow-lg overflow-hidden sm:rounded-lg flex flex-col items-center justify-center">
             <h2 class="text-3xl font-bold text-indigo-700 mb-8 text-center">Login</h2>
 
             {{-- Session Status --}}

@@ -31,7 +31,7 @@
     </div>
     
     {{-- Search Button (Optional, if not relying on keypress) --}}
-    <x-ui.button variant="primary" type="submit">
+    <x-ui.Button variant="primary" type="submit">
         Search
-    </x-ui.button>
+    </x-ui.Button>
 </div>
