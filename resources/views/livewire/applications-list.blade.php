@@ -1,4 +1,5 @@
 <div>
+    
     <form action="#">
         <input 
             wire:model.live.debounce:200ms="search"

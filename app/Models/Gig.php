@@ -16,13 +16,21 @@ class Gig extends Model
 
     protected $fillable = [
         'provider_id', 'title', 'description', 'required_skills', 
-        'payment_type', 'payment_amount', 'duration', 'application_deadline', 'status'
+        'payment_type', 'payment_amount', 'duration', 'application_deadline', 'status',
+        'location',
+        'category_id',
     ];
+
     
     protected $casts = [
         'application_deadline' => 'date',
         'payment_amount' => 'decimal:2',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     /**
      * Get the provider (organization) that posted the gig. (Belongs To)

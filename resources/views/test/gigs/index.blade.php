@@ -9,30 +9,13 @@
 
     <h1>GIGS</h1>
 
+    <a href="{{ route('gigs.create') }}">Create New Gig</a>
+
     @foreach ($gigs as $gig) 
         <p>{{ $gig->id }}. {{ $gig->title }}</p>
         <p>{{ $gig->description }}</p>
         
-        <form action="{{ route('applications.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="job_id" value={{ $gig->id }} />
-            <button type="submit">APPLY</button>
-        </form>
-
-        @if(auth()->user()->savedGigs->contains($gig->id))
-            <form action="{{ route('gigs.unsave', $gig->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button class="text-red-600">Remove from Saved</button>
-            </form>
-        @else
-            <form action="{{ route('gigs.save', $gig->id) }}" method="POST">
-                @csrf
-                <button class="text-blue-600">Save Gig</button>
-            </form>
-        @endif
-
-
+        <a href="{{ route('gigs.show', $gig) }}">View Gig</a>
         <br>
     @endforeach
 </div>

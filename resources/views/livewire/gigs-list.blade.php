@@ -22,13 +22,19 @@
                 <td>{{ $gig->status ?? 'Open' }}</td>
                 <td>{{ $gig->applications_count }}</td>
                 <td>
-                    <a href="#">See Post</a>
+                    <a href="{{ route('gigs.show', $gig) }}">See Post</a>
 
-                    @if($gig->applications_count > 0)
-                        <a href="{{ route('gigs.applicants', ['gig' => $gig->id]) }}">See Applicants</a>
+                    <a href="{{ route('gigs.applicants', ['gig' => $gig->id]) }}">See Applicants</a>
+
+                    @if($gig->status == "open")
+                        <form action="{{ route('gigs.close', $gig) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit">Close Applications</button>
+                        </form>
+                    @else
+                        <span>Closed</span>
                     @endif
-
-                    <a>Close Applications</a>
                 </td>
             </tr>
         @endforeach

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             GigSeeder::class,
+            CategorySeeder::class
         ]);
 
         Schema::enableForeignKeyConstraints();
