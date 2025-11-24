@@ -28,11 +28,13 @@ class ApplicationController extends Controller
             $applications = Application::all();
 
         } else if ($user->isProvider()) {
-            $gigs = $user->provider->gigs()->withCount('applications')->get();
+            // $gigs = $user->provider->gigs()->withCount('applications')->get();
+            return view('test.applications.index');
 
         } else if ($user->isStudent()) {
             // Student see only their own applications
-            $applications = Application::where('student_id', $user->id)->get();
+            // $applications = Application::where('student_id', $user->id)->get();
+            return view('test.applications.index');
 
         }
         
