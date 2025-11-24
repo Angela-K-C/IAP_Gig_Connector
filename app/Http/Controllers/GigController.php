@@ -149,6 +149,6 @@ class GigController extends Controller
         // Get all applications (no eager loading)
         $applications = $gig->applications;
 
-        return view('test.gigs.applicants', compact('gig', 'applications'));
+        return view('provider.gigs.applicants', compact('gig', 'applications'));
     }
 }
