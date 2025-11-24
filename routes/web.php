@@ -7,13 +7,8 @@ use App\Http\Controllers\GigController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SavedGigsController;
 use App\Mail\ApplicationStatus;
-use App\Models\Gig;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\RecommendationController;
-use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +26,6 @@ Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard'
 
 // Authenticated user routes
 Route::middleware(['auth'])->group(function () {
-
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -41,7 +35,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('profile.destroy');
 
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
