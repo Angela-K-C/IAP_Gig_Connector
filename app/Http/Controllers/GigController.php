@@ -120,7 +120,10 @@ class GigController extends Controller
      */
     public function destroy(Gig $gig)
     {
-        //
+        $gig->delete();
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Gig deleted successfully.');
     }
 
     // Close gig

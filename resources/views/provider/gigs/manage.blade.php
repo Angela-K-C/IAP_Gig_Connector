@@ -44,7 +44,11 @@
                                     @endif
 
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this gig?')">Delete</button>
+                                        <form action="{{ route('gigs.destroy', $gig->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this gig?')">Delete</button>
+                                        </form>           
                                     </td>
                                 </tr>
                             @endforeach
