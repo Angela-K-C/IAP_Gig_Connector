@@ -20,22 +20,8 @@
             {{-- Jobs Count and Sort --}}
             <div class="flex items-center justify-between mb-6">
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                    <span class="font-semibold text-gray-900 dark:text-gray-100 text-lg">{{ count($gigs) }}</span> 
+                    <span class="font-semibold text-gray-900 dark:text-gray-100 text-lg">{{ count($gigs ?? []) }}</span> 
                     <span class="ml-1">Gigs Found</span>
-                </div>
-                <div class="flex items-center gap-2 text-sm">
-                    <label for="sort" class="text-gray-600 dark:text-gray-400">Sort by:</label>
-                    <select 
-                        id="sort" 
-                        name="sort" 
-                        onchange="this.form.submit()"
-                        class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    >
-                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest Post</option>
-                        <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Oldest Post</option>
-                        <option value="salary_high" {{ request('sort') === 'salary_high' ? 'selected' : '' }}>Salary: High to Low</option>
-                        <option value="salary_low" {{ request('sort') === 'salary_low' ? 'selected' : '' }}>Salary: Low to High</option>
-                    </select>
                 </div>
             </div>
 
@@ -51,13 +37,6 @@
                     </div>
                 @endforelse
             </div>
-
-            {{-- Pagination --}}
-            {{-- @if($gigs->hasPages())
-            <div class="mt-8">
-                {{ $gigs->links() }}
-            </div>
-            @endif --}}
         </x-dashboard-layout>
     </div>
 </div>

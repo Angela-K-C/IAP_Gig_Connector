@@ -2,6 +2,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GigController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SavedGigsController;
@@ -26,28 +27,7 @@ Route::get('/', function () {
 
 
 // Dashboard (show respective dashboard based on role)
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-
-    if (!$user) {
-        return redirect()->route('login');
-    }
-
-    if ($user->isProvider()) {
-        $gigs = $user->provider->gigs()->withCount('applications')->get();
-        return view('provider.dashboard', compact('gigs'));
-
-    } elseif ($user->isStudent()) {
-        // Use controller so $gigs is passed
-        return view('student.dashboard');
-
-    } elseif ($user->isAdmin()) {
-        return view('admin.dashboard');
-        
-    } else {
-        return view('dashboard'); // fallback
-    }
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 // Authenticated user routes
 Route::middleware(['auth'])->group(function () {
@@ -70,16 +50,6 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/settings', function () { return view('settings'); })->name('settings');
     Route::get('/gigs/manage', [JobController::class, 'create'])->name('gigs.manage');
 });
-
-Route::get('/dashboard', function () {
-    if (auth()->user()->isStudent()) {
-        return view('student.dashboard');
-
-    } else if (auth()->user()->isProvider()) {
-        return view('provider.dashboard');
-
-    }
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

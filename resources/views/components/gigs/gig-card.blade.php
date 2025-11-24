@@ -9,48 +9,40 @@
         </div>
         <div class="flex-1 min-w-0">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug mb-1 line-clamp-2">
-                {{ $gig['title'] ?? 'Senior Product Designer' }}
+                {{ $gig->title ?? 'Senior Product Designer' }}
             </h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $gig['company'] ?? 'Company Name' }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $gig->provider->organization_name }}</p>
         </div>
     </div>
 
     {{-- Location --}}
     <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-3">
         <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 flex-shrink-0"></i>
-        <span class="truncate">{{ $gig['location'] ?? 'Kabul, New Afghanistan' }}</span>
+        <span class="truncate">{{ $gig->location ?? "Unknown" }}</span>
     </div>
 
     {{-- Job Details Badges --}}
     <div class="flex flex-wrap items-center gap-2 mb-3">
         <span class="inline-flex items-center px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-xs font-medium">
-            {{ $gig['level'] ?? 'Mid-Senior' }}
+            {{ $gig->category->name ?? 'Unset' }}
         </span>
-        <span class="inline-flex items-center px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-xs font-medium">
-            {{ $gig['type'] ?? 'Full-Time' }}
-        </span>
-        @if(isset($gig['badge']))
-        <span class="inline-flex items-center px-2.5 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-md text-xs font-medium">
-            {{ $gig['badge'] }}
-        </span>
-        @endif
     </div>
 
     {{-- Salary --}}
     <div class="mb-4">
-        <span class="text-xl font-bold text-gray-900 dark:text-gray-100">${{ number_format($gig['salary'] ?? 11520) }}</span>
-        <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">PA</span>
+        <span class="text-xl font-bold text-gray-900 dark:text-gray-100">${{ $gig->payment_amount }}</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">{{ $gig->payment_type }}</span>
     </div>
 
     {{-- Description --}}
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3 leading-relaxed">
-        {{ $gig['description'] ?? 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.' }}
+        {{ $gig->description }}
     </p>
 
     {{-- Footer --}}
     <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
         <span class="text-xs text-gray-500 dark:text-gray-400">
-            {{ $gig['date'] ?? '28 March 2021' }}
+            {{ \Carbon\Carbon::parse($gig->application_deadline)->toFormattedDateString() }}
         </span>
         <div class="flex items-center gap-1">
             <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" title="Save">

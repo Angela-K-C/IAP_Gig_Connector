@@ -28,26 +28,6 @@ class ApplicationController extends Controller
             $gigs = $user->provider->gigs()->withCount('applications')->get();
             return view('provider.gigs.manage', compact('gigs'));
         }
-        
-        // $applications = null;
-        // $gigs = null;
-
-        // if ($user->isAdmin()) {
-        //     // Admin sees all applications
-        //     $applications = Application::all();
-
-        // } else if ($user->isProvider()) {
-        //     // $gigs = $user->provider->gigs()->withCount('applications')->get();
-        //     return view('test.applications.index');
-
-        // } else if ($user->isStudent()) {
-        //     // Student see only their own applications
-        //     // $applications = Application::where('student_id', $user->id)->get();
-        //     return view('test.applications.index');
-
-        // }
-        
-        // return view('test.applications.index', compact('applications', 'gigs'));
     }
 
     /**
