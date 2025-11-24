@@ -13,6 +13,8 @@
         </p>
     </header>
 
+    <a href="{{ route('dashboard') }}">Back</a>
+
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>

@@ -46,7 +46,7 @@
                 @if(request('role') === 'provider')
                     <div class="mt-4">
                         <x-input-label for="organization_name" :value="('Organization Name')" />
-                        <x-text-input id="organization_name" type="text" name="name" :value="old('organization_name')" required autofocus autocomplete="organization_name" class="mt-1 block w-full" />
+                        <x-text-input id="organization_name" type="text" name="organization_name" :value="old('organization_name')" required autofocus autocomplete="organization_name" class="mt-1 block w-full" />
                         <x-input-error :messages="$errors->get('organization_name')" class="mt-2" />
                     </div>
 
