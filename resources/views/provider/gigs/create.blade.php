@@ -1,10 +1,10 @@
 {{-- resources/views/provider/gigs/create.blade.php --}}
-
+<x-navigation.sidebar-nav />
 <x-dashboard-layout title="Create New Job Posting" user="Provider">
     <div class="flex min-h-screen bg-gray-50 dark:bg-gray-900">
 
         {{-- Sidebar --}}
-        <x-navigation.sidebar-nav />
+        
 
         {{-- Main Content --}}
         <div class="flex-1 overflow-auto p-6 lg:p-10">
@@ -57,20 +57,20 @@
 
                         {{-- Pay Rate & Amount --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <x-ui.input-field id="pay_rate_type" label="Pay Rate Type" type="select" name="pay_rate_type">
-                                <option value="hourly" @if(old('pay_rate_type')=='hourly') selected @endif>Hourly</option>
-                                <option value="monthly" @if(old('pay_rate_type')=='monthly') selected @endif>Monthly</option>
-                                <option value="annual" @if(old('pay_rate_type')=='annual') selected @endif>Annual</option>
-                                <option value="contract" @if(old('pay_rate_type')=='contract') selected @endif>Contract Rate</option>
+                            <x-ui.input-field id="payment_type" label="Pay Rate Type" type="select" name="payment_type">
+                                <option value="hourly" @if(old('payment_type')=='hourly') selected @endif>Hourly</option>
+                                <option value="monthly" @if(old('payment_type')=='monthly') selected @endif>Monthly</option>
+                                <option value="annual" @if(old('payment_type')=='annual') selected @endif>Annual</option>
+                                <option value="contract" @if(old('payment_type')=='contract') selected @endif>Contract Rate</option>
                             </x-ui.input-field>
 
                             <x-ui.input-field 
-                                id="pay_amount" 
+                                id="payment_amount" 
                                 label="Amount" 
                                 type="number" 
-                                name="pay_amount" 
+                                name="payment_amount" 
                                 placeholder="e.g., 500" 
-                                :value="old('pay_amount')"
+                                :value="old('payment_amount')"
                                 helper="Enter the amount (e.g., 500 for KES 500)"
                             />
                         </div>
@@ -88,11 +88,11 @@
 
                         {{-- Application Deadline --}}
                         <x-ui.input-field 
-                            id="deadline" 
+                            id="application_deadline" 
                             label="Application Deadline" 
                             type="date" 
-                            name="deadline" 
-                            :value="old('deadline')"
+                            name="application_deadline" 
+                            :value="old('application_deadline')"
                             helper="The last day applications will be accepted."
                         />
 

@@ -3,56 +3,56 @@
         <x-navigation.sidebar-nav />
         <div class="flex-1 overflow-auto">
             <main class="p-6 lg:p-10 max-w-5xl mx-auto">
-                <h2 class="text-2xl font-bold mb-8 text-gray-800 dark:text-gray-100">My Gig Posts</h2>
+                <h2 class="text-2xl font-bold mb-8 text-gray-800 dark:text-gray-100">My Applications</h2>
                 <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-900">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Job Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date Posted</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Applicants</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date Applied</th>
                                 <th class="px-6 py-3"></th>
                                 <th class="px-6 py-3"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">Math Tutor</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">Open</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2025-11-01</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600 dark:text-indigo-400">12</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">Pending</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2025-11-20</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg text-sm transition">Close</button>
+                                    <a href="#" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition">View Job</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this gig?')">Delete</button>
+                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this application?')">Delete</button>
                                 </td>
                             </tr>
+
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">Graphic Designer</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">Closed</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2025-10-20</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600 dark:text-indigo-400">5</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">Accepted</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2025-11-15</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 bg-yellow-500 opacity-50 cursor-not-allowed text-white rounded-lg text-sm" disabled>Close</button>
+                                    <a href="#" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition">View Job</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this gig?')">Delete</button>
+                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this application?')">Delete</button>
                                 </td>
                             </tr>
+
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">Data Entry Clerk</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">Open</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">Rejected</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2025-11-10</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600 dark:text-indigo-400">8</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg text-sm transition">Close</button>
+                                    <a href="#" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition">View Job</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this gig?')">Delete</button>
+                                    <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this application?')">Delete</button>
                                 </td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>

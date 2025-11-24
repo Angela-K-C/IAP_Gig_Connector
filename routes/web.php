@@ -78,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
         $profile->logo_path = $validatedProfile['logo_path'] ?? null;
         $profile->save();
 
-        return back()->with('status', 'profile-updated');
+        return redirect()->route('provider.profile.show')->with('status', 'profile-updated');
     })->name('provider.profile.update');
 
     // Student Profile Routes
@@ -155,6 +155,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/gigs/create', [GigController::class, 'create'])->name('gigs.create');
         Route::post('/gigs', [GigController::class, 'store'])->name('gigs.store');
     });
+
+    // Student Saved Jobs Route
+    Route::get('/student/saved-jobs', function () {
+        return view('student.gigs.saved');
+    })->name('student.saved_jobs');
 
     // Logout
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
