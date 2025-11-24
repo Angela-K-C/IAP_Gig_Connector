@@ -42,17 +42,19 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
 
-                {{-- Conditionally show extra fields for students --}}
-                @if(request('role') === 'student')
-                <div class="mt-4">
-                    <x-input-label for="university" :value="('University/College')" />
-                    <select id="university" name="university" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
-                        <option value="">Select here...</option>
-                        <option value="strathmore">Strathmore University</option>
-                        {{-- Add more options --}}
-                    </select>
-                    <x-input-error :messages="$errors->get('university')" class="mt-2" />
-                </div>
+                {{-- Extra fields for provider --}}
+                @if(request('role') === 'provider')
+                    <div class="mt-4">
+                        <x-input-label for="organization_name" :value="('Organization Name')" />
+                        <x-text-input id="organization_name" type="text" name="name" :value="old('organization_name')" required autofocus autocomplete="organization_name" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('organization_name')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label for="contact_number" :value="('Contact Number')" />
+                        <x-text-input id="contact_number" type="text" name="contact_number" :value="old('contact_number')" required autofocus autocomplete="contact_number" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('contact_number')" class="mt-2" />
+                    </div>
                 @endif
 
                 <div class="flex items-center justify-end mt-6">

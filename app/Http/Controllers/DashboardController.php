@@ -25,11 +25,6 @@ class DashboardController extends Controller
 
             return view('student.dashboard', compact('gigs'));
 
-        } elseif ($user->isAdmin()) {
-            return view('admin.dashboard');
-            
-        } else {
-            return view('dashboard'); // fallback
         }
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Provider;
+use App\Models\StudentProfile;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -28,62 +30,39 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-//     public function store(Request $request): RedirectResponse
-//     {
-//         $request->validate([
-//             'name' => ['required', 'string', 'max:255'],
-//             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-//             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-//             'role' => ['required', 'string', 'in:student,provider'],
-//         ]);
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'in:student,provider'],
+        ]);
 
-//         $user = User::create([
-//             'name' => $request->name,
-//             'email' => $request->email,
-//             'password' => Hash::make($request->password),
-//             'role' => $request->role,
-//         ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
 
-//         // Initial creation of user in StudentProfile & Provider table
-//         if ($request->role == "student") {
-//             StudentProfile::create([
-//                 "user_id" => $user->id
-//             ]);
-//         } else if ($request->role == "provider") {
-//             Provider::create([
-//                 "user_id" => $user->id,
-//                 "organization_name" => $request->organization_name,
-//                 "contact_number" => $request->contact_number
-//             ]);
-//         }
+        // Initial creation of user in StudentProfile & Provider table
+        if ($request->role == "student") {
+            StudentProfile::create([
+                "user_id" => $user->id
+            ]);
+        } else if ($request->role == "provider") {
+            Provider::create([
+                "user_id" => $user->id,
+                "organization_name" => $request->organization_name,
+                "contact_number" => $request->contact_number
+            ]);
+        }
 
-//         event(new Registered($user));
+        event(new Registered($user));
 
-//         Auth::login($user);
+        Auth::login($user);
 
-//         return redirect(route('dashboard', absolute: false));
-//     }
-// }
-    public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => ['required', 'confirmed', Password::defaults()],
-        'role' => 'required|in:student,provider',
-        'university' => 'required_if:role,student|string|max:255',
-    ]);
-
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => $request->role,
-        'university' => $request->university ?? null,
-    ]);
-
-    // Optionally log in user
-    Auth::login($user);
-
-    return redirect()->route('dashboard');
-}}
+        return redirect(route('dashboard', absolute: false));
+    }
+}

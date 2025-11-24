@@ -25,7 +25,7 @@ class SavedGigsController extends Controller
     {
         $savedGigs = auth()->user()->savedGigs()->latest()->get();
 
-        return view('test.gigs.saved', compact('savedGigs'));
+        return view('student.gigs.saved', compact('savedGigs'));
     }
 
 }

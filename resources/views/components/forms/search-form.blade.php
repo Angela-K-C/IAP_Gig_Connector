@@ -8,7 +8,8 @@
         <input 
             type="search" 
             name="search"
-            placeholder="Search for gigs, roles, or companies..."
+            wire:model.live.debounce:200ms="search"
+            placeholder="Search..."
             class="flex-grow border-none focus:ring-0 p-2.5"
             value="{{ request('search') }}"
         >
