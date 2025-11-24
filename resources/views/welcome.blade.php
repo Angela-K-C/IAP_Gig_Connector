@@ -2,6 +2,7 @@
 <x-guest-layout>
     <div class="min-h-screen flex items-center justify-center p-6">
         <div class="w-full max-w-2xl bg-white rounded-lg shadow-xl overflow-hidden p-8 flex flex-col items-center justify-center">
+            <img src="images/logo_gig.png" alt="Gig Connector Logo" class="w-24 h-24 object-contain mb-4 bg-none" />
             <h1 class="text-4xl font-extrabold text-indigo-700 mb-2 text-center">Gig Connector</h1>
             <p class="text-indigo-500 text-lg mb-8 text-center">Connect, Apply, Grow</p>
             <p class="text-lg text-gray-700 mb-8 text-center">Join us as a:</p>
