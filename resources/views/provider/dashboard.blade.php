@@ -116,47 +116,49 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @forelse($posts ?? [] as $post)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                                <td class="px-8 py-5">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $post->title ?? 'Tutor Math' }}
-                                    </div>
-                                </td>
-                                <td class="px-8 py-5">
-                                    @if(($post->status ?? 'open') === 'open')
-                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                                            Open
-                                        </span>
-                                    @else
-                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
-                                            Closed
-                                        </span>
-                                    @endif
-                                </td>
-                                <td class="px-8 py-5">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100 font-semibold">
-                                        {{ $post->applications_count ?? 100 }}
-                                    </div>
-                                </td>
-                                <td class="px-8 py-5">
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ $post->start_date ?? '12/08' }} - {{ $post->end_date ?? '21/09/2025' }}
-                                    </div>
-                                </td>
-                                <td class="px-8 py-5">
-                                    <div class="flex items-center gap-2">
-                                        <a href="{{ route('gigs.applications', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
-                                            Applicants
-                                        </a>
-                                        <span class="text-gray-300 dark:text-gray-600">,</span>
-                                        <a href="{{ route('gigs.show', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
-                                            Post
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
+                            @foreach($gigs ?? [] as $gig)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                    <td class="px-8 py-5">
+                                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                            {{ $gig->title ?? 'Tutor Math' }}
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        @if(($gig->status ?? 'open') === 'open')
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                                Open
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
+                                                Closed
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        <div class="text-sm text-gray-900 dark:text-gray-100 font-semibold">
+                                            {{ count($gig->applications) }}
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                                            {{ $post->start_date ?? '12/08' }} - {{ $post->end_date ?? '21/09/2025' }}
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        <div class="flex items-center gap-2">
+                                            <a href="{{ route('gigs.applications', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
+                                                Applicants
+                                            </a>
+                                            <span class="text-gray-300 dark:text-gray-600">,</span>
+                                            <a href="{{ route('gigs.show', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
+                                                Post
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            {{-- @empty
                             <tr>
                                 <td colspan="5" class="px-8 py-16 text-center">
                                     <i data-lucide="inbox" class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4"></i>
@@ -164,7 +166,7 @@
                                     <p class="text-gray-400 dark:text-gray-500 text-sm">Create your first gig post to get started</p>
                                 </td>
                             </tr>
-                            @endforelse
+                            @endforelse --}}
                         </tbody>
                     </table>
                 </div>

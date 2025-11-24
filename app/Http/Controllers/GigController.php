@@ -14,8 +14,8 @@ class GigController extends Controller
     public function index()
     {
         $gigs = Gig::all();
-
-        return view('test.gigs.index', compact('gigs'));
+        
+        return view('dashboard', compact('gigs'));
     }
 
     /**
@@ -24,7 +24,7 @@ class GigController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('test.gigs.create', compact('categories'));
+        return view('provider.gigs.create', compact('categories'));
     }
 
     /**
@@ -73,7 +73,7 @@ class GigController extends Controller
             $hasApplied = $gig->applications->contains('student_id', $user->id);
         }
 
-        return view('test.gigs.show', compact('gig', 'hasApplied'));
+        return view('gigs.show', compact('gig', 'hasApplied'));
     }
 
     /**

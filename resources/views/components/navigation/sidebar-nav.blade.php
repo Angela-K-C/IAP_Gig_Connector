@@ -47,46 +47,17 @@
             <div class="mb-10">
                 <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-3">Main</div>
                 
-                <nav class="space-y-2">
-                    {{-- Dashboard with sub-items --}}
-                    <div x-data="{ dashOpen: {{ request()->routeIs('dashboard.*') ? 'true' : 'false' }} }">
-                        <button 
-                            @click="dashOpen = !dashOpen" 
-                            class="flex items-center justify-between w-full px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                            {{ request()->routeIs('dashboard.*') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"
-                        >
-                            <div class="flex items-center">
-                                <i data-lucide="grid" class="w-5 h-5 mr-3"></i>
-                                <span>Dashboard</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': dashOpen }"></i>
-                        </button>
-                        
-                        <div 
-                            x-show="dashOpen" 
-                            x-cloak
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 -translate-y-1"
-                            x-transition:enter-end="opacity-100 translate-y-0"
-                            x-transition:leave="transition ease-in duration-150"
-                            x-transition:leave-start="opacity-100 translate-y-0"
-                            x-transition:leave-end="opacity-0 -translate-y-1"
-                            class="ml-11 mt-2 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4"
-                        >
-                            <a href="#" class="block px-3 py-2 rounded-lg text-sm transition-colors duration-200
-                                {{ request()->routeIs('dashboard.filters') ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }}">
-                                Filters
-                            </a>
-                            <a href="{{ route('recommendations') }}" class="block px-3 py-2 rounded-lg text-sm transition-colors duration-200
-                                {{ request()->routeIs('recommendations') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }}">
-                                Recommendations
-                            </a>
-                        </div>
-                    </div>
+                <nav class="space-y-2">            
+                    {{-- Dashboard --}}
+                    <a href="{{ url('/dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                        {{ request()->routeIs('gigs.manage') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                        <i data-lucide="grid" class="w-5 h-5 mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
 
                     {{-- My Applications for students, Manage Posts for providers --}}
                     @if($role === 'provider')
-                        <a href="{{ route('gigs.manage') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                        <a href="{{ route('applications.index') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
                             {{ request()->routeIs('gigs.manage') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
                             <i data-lucide="list" class="w-5 h-5 mr-3"></i>
                             <span>Manage Posts</span>
@@ -100,13 +71,11 @@
                     @endif
 
                     {{-- Saved Jobs --}}
-                    @if(Route::has('student.saved_jobs'))
-                        <a href="{{ route('student.saved_jobs') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                            {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
-                            <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
-                            <span>Saved Jobs</span>
-                        </a>
-                    @endif
+                    <a href="" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                        {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                        <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
+                        <span>Saved Jobs</span>
+                    </a>
 
                     {{-- My Profile --}}
                     @if(Route::has('profile.edit'))

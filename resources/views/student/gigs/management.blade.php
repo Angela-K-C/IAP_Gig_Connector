@@ -1,0 +1,40 @@
+<x-app-layout>
+    <div class="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+        <x-navigation.sidebar-nav />
+        <div class="flex-1 overflow-auto">
+            <main class="p-6 lg:p-10 max-w-5xl mx-auto">
+                <h2 class="text-2xl font-bold mb-8 text-gray-800 dark:text-gray-100">My Applications</h2>
+                <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-900">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Job Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date Applied</th>
+                                <th class="px-6 py-3"></th>
+                                <th class="px-6 py-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+
+                            @foreach ($applications as $application)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{{ $application->gig->title }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $application->status }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($application->applied_at)->format('M jS Y') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('gigs.show', $application->gig) }}" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition">View Job</a>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="px-3 py-1 text-red-600 hover:underline" onclick="return confirm('Delete this application?')">Delete</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+</x-app-layout>

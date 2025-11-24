@@ -1,7 +1,6 @@
 
 <?php
 
-<<<<<<< HEAD
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\GigController;
 use App\Http\Controllers\ProfileController;
@@ -9,12 +8,8 @@ use App\Http\Controllers\SavedGigsController;
 use App\Mail\ApplicationStatus;
 use App\Models\Gig;
 use Illuminate\Support\Facades\Mail;
-=======
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\JobController;
->>>>>>> NewProduction
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,20 +26,24 @@ Route::get('/', function () {
 
 
 // Dashboard (show respective dashboard based on role)
-use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 Route::get('/dashboard', function () {
     $user = Auth::user();
+
     if (!$user) {
         return redirect()->route('login');
     }
-    $role = $user->role;
-    if ($role === 'provider') {
-        return view('provider.dashboard');
-    } elseif ($role === 'student') {
+
+    if ($user->isProvider()) {
+        $gigs = $user->provider->gigs()->withCount('applications')->get();
+        return view('provider.dashboard', compact('gigs'));
+
+    } elseif ($user->isStudent()) {
         // Use controller so $gigs is passed
-        return app(StudentDashboardController::class)->index(request());
-    } elseif ($role === 'admin') {
+        return view('student.dashboard');
+
+    } elseif ($user->isAdmin()) {
         return view('admin.dashboard');
+        
     } else {
         return view('dashboard'); // fallback
     }
@@ -67,19 +66,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', [RecommendationController::class, 'index'])
         ->name('recommendations');
 
-    // Admin-specific routes
-    Route::middleware('can:admin')->group(function () {
-        Route::get('/gigs', [JobController::class, 'index'])->name('gigs.index');
-        Route::get('/gigs/create', [JobController::class, 'create'])->name('gigs.create');
-        Route::get('/applications/all', [ApplicationController::class, 'all'])->name('applications.all');
-        Route::get('/settings', function () { return view('settings'); })->name('settings');
-        Route::get('/gigs/manage', [JobController::class, 'create'])->name('gigs.manage');
-    });
+    // Route::get('/gigs/create', [JobController::class, 'create'])->name('gigs.create');
+    // Route::get('/settings', function () { return view('settings'); })->name('settings');
+    Route::get('/gigs/manage', [JobController::class, 'create'])->name('gigs.manage');
 });
 
-<<<<<<< HEAD
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (auth()->user()->isStudent()) {
+        return view('student.dashboard');
+
+    } else if (auth()->user()->isProvider()) {
+        return view('provider.dashboard');
+
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -87,23 +86,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Route::middleware(['auth', 'role:admin'])->group(function() {
-//     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-//     Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
-// });
-
-// Protected routes for providers
-// Route::middleware(['auth', 'role:provider'])->group(function () {
-//     Route::get('/provider/dashboard', [ProviderController::class, 'dashboard'])->name('provider.dashboard');
-//     Route::get('/gigs/create', [GigController::class, 'create'])->name('gigs.create');
-// });
-
-// Protected routes for admins
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-//     // ... add more admin-specific routes here
-// });
 
 // ============== APPLICATION ROUTES =================
 Route::resource('applications', ApplicationController::class);
@@ -134,11 +116,4 @@ Route::get('/saved-gigs', [SavedGigsController::class, 'savedList'])->name('gigs
 Route::post('/gigs/{gig}/save', [SavedGigsController::class, 'save'])->name('gigs.save');
 Route::delete('/gigs/{gig}/save', [SavedGigsController::class, 'remove'])->name('gigs.unsave');
 
-
-
 require __DIR__.'/auth.php';
-
-=======
-// Auth scaffolding (login, register, password reset)
-require __DIR__.'/auth.php';
->>>>>>> NewProduction

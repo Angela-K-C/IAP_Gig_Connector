@@ -20,7 +20,7 @@
             {{-- Jobs Count and Sort --}}
             <div class="flex items-center justify-between mb-6">
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                    <span class="font-semibold text-gray-900 dark:text-gray-100 text-lg">{{ 23 }}</span> 
+                    <span class="font-semibold text-gray-900 dark:text-gray-100 text-lg">{{ count($gigs) }}</span> 
                     <span class="ml-1">Gigs Found</span>
                 </div>
                 <div class="flex items-center gap-2 text-sm">
@@ -53,11 +53,11 @@
             </div>
 
             {{-- Pagination --}}
-            @if($gigs->hasPages())
+            {{-- @if($gigs->hasPages())
             <div class="mt-8">
                 {{ $gigs->links() }}
             </div>
-            @endif
+            @endif --}}
         </x-dashboard-layout>
     </div>
 </div>
