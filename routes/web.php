@@ -42,9 +42,7 @@ Route::middleware(['auth'])->group(function() {
 ////////// Protected routes for providers ///////////
 Route::middleware(['auth'])->group(function () {
     // Provider dashboard
-    Route::get('/provider/dashboard', function() {
-        return view('provider.dashboard');
-    })->name('provider.dashboard');
+    Route::get('/provider/dashboard', [\App\Http\Controllers\ProviderDashboardController::class, 'index'])->name('provider.dashboard');
 
     // Manage gigs
     Route::get('/provider/gigs/manage', [\App\Http\Controllers\ProviderGigController::class, 'index'])->name('provider.gigs.manage');
