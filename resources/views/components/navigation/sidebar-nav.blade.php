@@ -109,9 +109,12 @@
                     @endif
 
                     {{-- My Profile --}}
-                    @if(Route::has('profile.edit'))
-                        <a href="{{ route('profile.edit') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                            {{ request()->routeIs('profile.*') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                    @php
+                        $profileRoute = $role === 'provider' ? 'provider.profile.show' : 'student.profile.show';
+                    @endphp
+                    @if(Route::has($profileRoute))
+                        <a href="{{ route($profileRoute) }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                            {{ request()->routeIs($profileRoute) ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
                             <i data-lucide="user" class="w-5 h-5 mr-3"></i>
                             <span>My Profile</span>
                         </a>
