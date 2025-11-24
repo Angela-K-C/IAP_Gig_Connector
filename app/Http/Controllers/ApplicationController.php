@@ -141,5 +141,6 @@ class ApplicationController extends Controller
 
         // Redirect back to applications page
         return redirect()->route('applications.index')->with('success', 'Application successfully deleted!');
+
     }
 }

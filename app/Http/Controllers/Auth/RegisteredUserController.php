@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\Provider;
 use App\Models\StudentProfile;
+=======
+>>>>>>> NewProduction
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+<<<<<<< HEAD
+=======
+use Illuminate\Validation\Rules\Password;
+>>>>>>> NewProduction
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -29,6 +36,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+<<<<<<< HEAD
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -65,3 +73,28 @@ class RegisteredUserController extends Controller
         return redirect(route('dashboard', absolute: false));
     }
 }
+=======
+    public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => ['required', 'confirmed', Password::defaults()],
+        'role' => 'required|in:student,provider',
+        'university' => 'required_if:role,student|string|max:255',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+        'university' => $request->university ?? null,
+    ]);
+
+    // Optionally log in user
+    Auth::login($user);
+
+    return redirect()->route('dashboard');
+}}
+>>>>>>> NewProduction

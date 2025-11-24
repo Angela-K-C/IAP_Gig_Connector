@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\SentMessage;
@@ -18,11 +18,17 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
+=======
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+>>>>>>> NewProduction
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -33,8 +39,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -44,8 +48,6 @@ class User extends Authenticatable
 
     /**
      * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
      */
     protected function casts(): array
     {
@@ -55,17 +57,34 @@ class User extends Authenticatable
         ];
     }
 
+<<<<<<< HEAD
     // relationships
     public function studentProfile(): HasOne
     {
         return $this->hasOne(StudentProfile::class);
     }
 
+=======
+    // --- RELATIONSHIPS ---
+
+    /**
+     * Get the Student profile associated with the user.
+     */
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    /**
+     * Get the Provider profile associated with the user.
+     */
+>>>>>>> NewProduction
     public function provider(): HasOne
     {
         return $this->hasOne(Provider::class);
     }
 
+<<<<<<< HEAD
     public function sentMessages(): HasMany
     {
         return $this->hasMany(Message::class, 'sender_id');
@@ -102,3 +121,33 @@ class User extends Authenticatable
     }
 
 }
+=======
+    /**
+     * Get the gigs posted by this user (if they are a Provider).
+     */
+    public function gigs(): HasMany
+    {
+        return $this->hasMany(Gig::class);
+    }
+
+    /**
+     * Get the applications submitted by this user (if they are a Student).
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+    
+    // --- HELPER METHODS ---
+    
+    public function isStudent(): bool 
+    {
+        return $this->role === 'student';
+    }
+
+    public function isProvider(): bool 
+    {
+        return $this->role === 'provider';
+    }
+}
+>>>>>>> NewProduction

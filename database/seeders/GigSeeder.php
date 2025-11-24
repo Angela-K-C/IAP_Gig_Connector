@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Gig;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class GigSeeder extends Seeder
 {
@@ -13,40 +13,30 @@ class GigSeeder extends Seeder
      */
     public function run(): void
     {
-        Gig::create([
-            'provider_id' => 2,
-            'title' => 'Website Development',
-            'description' => 'Build a responsive website for small businesses.',
-            'category_id' => 1, // assuming 1 = Web Development
-            'location' => 'Remote',
-            'payment_type' => 'fixed',
-            'payment_amount' => 500.00,
-            'duration' => '2 weeks',
-            'application_deadline' => Carbon::now()->addWeeks(2),
-        ]);
+        // Get the IDs of all users with the 'provider' role
+        $providerIds = User::where('role', 'provider')->pluck('id');
 
-        Gig::create([
-            'provider_id' => 2,
-            'title' => 'Social Media Marketing',
-            'description' => 'Manage social media campaigns for brand awareness.',
-            'category_id' => 4, // assuming 4 = Digital Marketing
-            'location' => 'Remote',
-            'payment_type' => 'hourly',
-            'payment_amount' => 20.00,
-            'duration' => '1 month',
-            'application_deadline' => Carbon::now()->addWeeks(3),
-        ]);
+        // Check if we have any providers
+        if ($providerIds->isEmpty()) {
+             return; 
+        }
 
-        Gig::create([
-            'provider_id' => 2,
-            'title' => 'SEO Optimization',
-            'description' => 'Improve website ranking in search engines.',
-            'category_id' => 4, // Digital Marketing
-            'location' => 'Remote',
-            'payment_type' => 'fixed',
-            'payment_amount' => 300.00,
-            'duration' => '3 weeks',
-            'application_deadline' => Carbon::now()->addWeeks(4),
-        ]);
+        // Create 10 sample gigs linked randomly to an existing provider
+        for ($i = 0; $i < 10; $i++) {
+            Gig::create([
+                // Randomly select a provider's ID
+                'user_id' => $providerIds->random(), 
+                'title' => 'Freelance API Development Project ' . ($i + 1),
+                'description' => 'We need a student to build a small REST API endpoint for our new application. Experience with Laravel Sanctum preferred.',
+                'required_skills' => json_encode(['Laravel', 'REST API', 'Postman']),
+                'payment_type' => 'fixed',
+                'payment_amount' => 500.00,
+                'duration' => '2 weeks',
+                'location' => 'Remote',
+                'is_remote' => true,
+                'application_deadline' => now()->addDays(10),
+                'status' => 'open',
+            ]);
+        }
     }
 }

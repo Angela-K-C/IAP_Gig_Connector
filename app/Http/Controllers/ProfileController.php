@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\StudentProfile;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function index(User $user) {
-        return view('profile.index');
-    }
-
     /**
      * Display the user's profile form.
      */
@@ -32,7 +26,6 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-
         $user = $request->user();
 
         $user->fill($request->validated());
