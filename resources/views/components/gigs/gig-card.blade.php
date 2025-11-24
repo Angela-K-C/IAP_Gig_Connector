@@ -5,7 +5,7 @@
     {{-- Header: Logo and Company --}}
     <div class="flex items-start gap-3 mb-4">
         <div class="{{ $gig['logo_bg'] ?? 'bg-blue-600' }} w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-            {{ $gig['logo_text'] ?? 'Ps' }}
+            {{ $gig->title[0] }}
         </div>
         <div class="flex-1 min-w-0">
             <h3 class="font-semibold text-gray-900 dark:text-gray-100 text-base leading-snug mb-1 line-clamp-2">

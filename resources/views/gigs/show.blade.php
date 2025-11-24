@@ -16,10 +16,6 @@
                     </h2>
 
                     {{-- Action Buttons --}}
-                    @if($hasApplied)
-                        
-                    @endif
-
                     
                     <div class="flex gap-3">
                         @if($hasApplied)
@@ -96,6 +92,13 @@
                                 <span class="text-gray-700 dark:text-gray-300 font-medium min-w-[140px]">Location:</span>
                                 <span class="text-indigo-600 dark:text-indigo-400 font-medium">
                                     {{ $gig->location }}
+                                </span>
+                            </div>
+
+                            <div class="flex">
+                                <span class="text-gray-700 dark:text-gray-300 font-medium min-w-[140px]">Category</span>
+                                <span class="text-indigo-600 dark:text-indigo-400 font-medium">
+                                    {{ $gig->category->name }}
                                 </span>
                             </div>
                         </div>

@@ -85,21 +85,6 @@
                     <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
                     Create a New Post
                 </a>
-
-                <div class="flex items-center gap-3 md:ml-8">
-                    <label for="sort" class="text-sm text-gray-600 dark:text-gray-400 font-medium">Sort by:</label>
-                    <select 
-                        id="sort" 
-                        name="sort" 
-                        onchange="this.form?.submit()"
-                        class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[180px]"
-                    >
-                        <option value="newest">Newest Post</option>
-                        <option value="oldest">Oldest Post</option>
-                        <option value="most_applications">Most Applications</option>
-                        <option value="least_applications">Least Applications</option>
-                    </select>
-                </div>
             </div>
 
             {{-- Posted Jobs Table --}}
@@ -116,7 +101,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach($gigs ?? [] as $gig)
+                            @forelse($gigs as $gig)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
                                     <td class="px-8 py-5">
                                         <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -136,29 +121,27 @@
                                     </td>
                                     <td class="px-8 py-5">
                                         <div class="text-sm text-gray-900 dark:text-gray-100 font-semibold">
-                                            {{ count($gig->applications) }}
+                                            {{ $gig->applications_count ?? 100 }}
                                         </div>
                                     </td>
                                     <td class="px-8 py-5">
                                         <div class="text-sm text-gray-600 dark:text-gray-400">
-                                            {{ $post->start_date ?? '12/08' }} - {{ $post->end_date ?? '21/09/2025' }}
+                                            {{ $gig->duration }}
                                         </div>
                                     </td>
                                     <td class="px-8 py-5">
                                         <div class="flex items-center gap-2">
-                                            <a href="{{ route('gigs.applications', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
+                                            <a href="{{ route('gigs.applicants', $gig) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
                                                 Applicants
                                             </a>
                                             <span class="text-gray-300 dark:text-gray-600">,</span>
-                                            <a href="{{ route('gigs.show', $post->id ?? '#') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
+                                            <a href="{{ route('gigs.show', $gig) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-semibold hover:underline">
                                                 Post
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
-
-                            {{-- @empty
+                            @empty
                             <tr>
                                 <td colspan="5" class="px-8 py-16 text-center">
                                     <i data-lucide="inbox" class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4"></i>
@@ -166,7 +149,7 @@
                                     <p class="text-gray-400 dark:text-gray-500 text-sm">Create your first gig post to get started</p>
                                 </td>
                             </tr>
-                            @endforelse --}}
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

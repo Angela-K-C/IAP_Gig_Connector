@@ -56,7 +56,7 @@ class GigController extends Controller
             'application_deadline' => $request->application_deadline,
         ]);
 
-        return redirect()->route('gigs.index')->with('success', 'Gig created successfully.');
+        return redirect()->route('dashboard')->with('success', 'Gig created successfully.');
     }
 
     /**

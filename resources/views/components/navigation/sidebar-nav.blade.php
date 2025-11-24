@@ -71,11 +71,13 @@
                     @endif
 
                     {{-- Saved Jobs --}}
-                    <a href="" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                        {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
-                        <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
-                        <span>Saved Jobs</span>
-                    </a>
+                    @if ($role === 'student')
+                        <a href="" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                            {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                            <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
+                            <span>Saved Jobs</span>
+                        </a>
+                    @endif
 
                     {{-- My Profile --}}
                     @if(Route::has('profile.edit'))

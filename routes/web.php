@@ -40,16 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-    // Student-specific routes
-    Route::get('/applications', [ApplicationController::class, 'index'])
-        ->name('applications.index');
-    Route::get('/recommendations', [RecommendationController::class, 'index'])
-        ->name('recommendations');
-
-    // Route::get('/gigs/create', [JobController::class, 'create'])->name('gigs.create');
-    // Route::get('/settings', function () { return view('settings'); })->name('settings');
-    Route::get('/gigs/manage', [JobController::class, 'create'])->name('gigs.manage');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -80,9 +72,8 @@ Route::patch('/gigs/{gig}/close', [GigController::class, 'close'])->name('gigs.c
 Route::get('/gigs/{gig}/applicants', [GigController::class, 'applicants'])->name('gigs.applicants');
 
 
-// Test routes
+// Saving gigs
 Route::get('/saved-gigs', [SavedGigsController::class, 'savedList'])->name('gigs.saved');
-
 Route::post('/gigs/{gig}/save', [SavedGigsController::class, 'save'])->name('gigs.save');
 Route::delete('/gigs/{gig}/save', [SavedGigsController::class, 'remove'])->name('gigs.unsave');
 

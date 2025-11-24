@@ -59,6 +59,19 @@
                             {{ old('description') }}
                         </x-ui.input-field>
 
+                        {{-- Category --}}
+                        <div>
+                            <label for="category_id">Category:</label>
+                            <select name="category_id" id="category_id">
+                                <option value="">Select a category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         {{-- Location --}}
                         <x-ui.input-field 
                             id="location" 
@@ -76,9 +89,7 @@
                             {{-- Pay Type --}}
                             <x-ui.input-field id="payment_type" label="Payment Type" type="select" name="payment_type">
                                 <option value="hourly" @selected(old('payment_type')=='hourly')>Hourly</option>
-                                <option value="monthly" @selected(old('payment_type')=='monthly')>Monthly</option>
-                                <option value="annual" @selected(old('payment_type')=='annual')>Annual</option>
-                                <option value="contract" @selected(old('payment_type')=='contract')>Contract Rate</option>
+                                <option value="fixed" @selected(old('payment_type')=='monthly')>Fixed</option>
                             </x-ui.input-field>
 
                             {{-- Pay Amount --}}
@@ -102,6 +113,17 @@
                             placeholder="e.g., Photoshop, Writing, JavaScript"
                         >
                             {{ old('required_skills') }}
+                        </x-ui.input-field>
+
+                        {{-- Duration --}}
+                        <x-ui.input-field 
+                            id="duration" 
+                            label="Duration" 
+                            type="text" 
+                            name="duration" 
+                            placeholder="Enter the duration of the job..."
+                        >
+                            {{ old('duration') }}
                         </x-ui.input-field>
 
                         {{-- Deadline --}}
