@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Http\Controllers\ApplicationController;
@@ -68,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/gigs/create', [JobController::class, 'create'])->name('gigs.create');
     // Route::get('/settings', function () { return view('settings'); })->name('settings');
-    Route::get('/gigs/manage', [JobController::class, 'create'])->name('gigs.manage');
+    Route::get('/gigs/manage', [GigController::class, 'manage'])->name('gigs.manage');
 });
 
 Route::get('/dashboard', function () {
@@ -112,6 +111,8 @@ Route::get('/gigs/{gig}/applicants', [GigController::class, 'applicants'])->name
 
 // Test routes
 Route::get('/saved-gigs', [SavedGigsController::class, 'savedList'])->name('gigs.saved');
+// Student Saved Gigs
+Route::get('/student/gigs/saved', [SavedGigsController::class, 'savedList'])->name('student.gigs.saved');
 
 Route::post('/gigs/{gig}/save', [SavedGigsController::class, 'save'])->name('gigs.save');
 Route::delete('/gigs/{gig}/save', [SavedGigsController::class, 'remove'])->name('gigs.unsave');

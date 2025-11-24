@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Gig;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GigController extends Controller
 {
@@ -64,6 +65,7 @@ class GigController extends Controller
      */
     public function show(Gig $gig)
     {
+        $user = Auth::user();
         $user = auth()->user();
 
         $hasApplied = false;
@@ -114,6 +116,17 @@ class GigController extends Controller
 
         return redirect()->route('gigs.show', $gig)->with('success', 'Gig updated successfully.');
     }
+
+
+public function manage()
+{
+    $user = auth()->user();
+    if (!$user) {
+        abort(403, 'Unauthorized');
+    }
+    $gigs = Gig::where('provider_id', $user->id)->get();
+    return view('provider.gigs.manage', compact('gigs'));
+}
 
     /**
      * Remove the specified resource from storage.

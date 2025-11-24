@@ -22,8 +22,7 @@
             {{-- Logo --}}
             <div class="mb-6">
                 <a href="/" class="flex flex-col items-center gap-2">
-                    <x-application-logo class="w-20 h-20 fill-current text-indigo-600" />
-                    <span class="text-xl font-semibold text-gray-700">{{ config('app.name', 'Laravel') }}</span>
+                    <span class="text-2xl font-bold text-indigo-700">Gig Connector</span>
                 </a>
             </div>
 

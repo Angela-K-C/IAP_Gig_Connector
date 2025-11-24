@@ -47,17 +47,18 @@
             <div class="mb-10">
                 <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-3">Main</div>
                 
-                <nav class="space-y-2">            
-                    {{-- Dashboard --}}
-                    <a href="{{ url('/dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                        {{ request()->routeIs('gigs.manage') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
-                        <i data-lucide="grid" class="w-5 h-5 mr-3"></i>
-                        <span>Dashboard</span>
-                    </a>
+                <nav class="space-y-2">
+                    {{-- Dashboard with sub-items --}}
+                   <a href="{{ route('dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+    {{ request()->routeIs('dashboard') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+    <i data-lucide="grid" class="w-5 h-5 mr-3"></i>
+    <span>Dashboard</span>
+</a>
+
 
                     {{-- My Applications for students, Manage Posts for providers --}}
                     @if($role === 'provider')
-                        <a href="{{ route('applications.index') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                        <a href="{{ route('gigs.manage') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
                             {{ request()->routeIs('gigs.manage') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
                             <i data-lucide="list" class="w-5 h-5 mr-3"></i>
                             <span>Manage Posts</span>
@@ -71,16 +72,21 @@
                     @endif
 
                     {{-- Saved Jobs --}}
-                    <a href="" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                        {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
-                        <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
-                        <span>Saved Jobs</span>
-                    </a>
+                    @if(Route::has('student.saved_jobs'))
+                        <a href="{{ route('student.saved_jobs') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                            {{ request()->routeIs('student.saved_jobs') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                            <i data-lucide="folder" class="w-5 h-5 mr-3"></i>
+                            <span>Saved Jobs</span>
+                        </a>
+                    @endif
 
                     {{-- My Profile --}}
-                    @if(Route::has('profile.edit'))
-                        <a href="{{ route('profile.edit') }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
-                            {{ request()->routeIs('profile.*') ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
+                    @php
+                        $profileRoute = $role === 'provider' ? 'provider.profile.show' : 'student.profile.show';
+                    @endphp
+                    @if(Route::has($profileRoute))
+                        <a href="{{ route($profileRoute) }}" class="flex items-center px-3 py-2.5 rounded-lg font-medium transition-all duration-200
+                            {{ request()->routeIs($profileRoute) ? 'bg-violet-100 dark:bg-violet-900/30 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
                             <i data-lucide="user" class="w-5 h-5 mr-3"></i>
                             <span>My Profile</span>
                         </a>
